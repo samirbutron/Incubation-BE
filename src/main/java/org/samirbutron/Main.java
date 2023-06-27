@@ -1,47 +1,144 @@
 package org.samirbutron;
 
-import classes.Celular;
-import classes.Persona;
+import classes.Motocicleta;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
+  private static Scanner entrada;
+  private static String marca, tipo;
+  private static int velocidad;
+  private static double peso;
+  private static Motocicleta moto = new Motocicleta();
 
   public static void main(String[] args) {
-    Persona persona1 = new Persona("Juanito", 23, 1.70, 65.5, "235-125-1234");
-    Persona persona2 = new Persona("Eustacio", 33, 1.67, 56.2, "967-145-9057");
-    Persona persona3 = new Persona("Perengano", 18, 1.63, 71.6, "165-566-6455");
-    Persona persona4 = new Persona("Arnoldo", 55, 1.63, 80.1, "154-457-2342");
-    Persona persona5 = new Persona("Rolando", 48, 1.73, 73.2, "333-126-1265");
 
-    List<Persona> listaPersonas = new ArrayList<Persona>();
+    List<Motocicleta> list = new ArrayList<>();
 
-    //Agregar elementos a listaPersonas
-    listaPersonas.add(persona1);
-    listaPersonas.add(persona2);
-    listaPersonas.add(persona3);
-    listaPersonas.add(persona4);
-    listaPersonas.add(persona5);
-    System.out.println(listaPersonas);
-    //Buscar en listaPersonas
-    Persona personaBuscada = listaPersonas.get(1);
-    System.out.println(personaBuscada);
-    //Editar
-    Persona personaEditada = listaPersonas.get(2);
-    personaEditada.setAltura(1.80);
-    personaEditada.setNombre("Cornelio");
-    listaPersonas.set(2,personaEditada);
-    System.out.println(listaPersonas);
-    //Eliminar
-    listaPersonas.remove(1);
-    System.out.println(listaPersonas);
-    //Iterar la listaPersonas
-    for(int i = 0; i < listaPersonas.size(); i++){
-      System.out.printf("\n[%d]=>" + listaPersonas.get(i).getNombre(), i);
-    }
-    System.out.println("\n");
-    for(Persona p : listaPersonas){
-      System.out.println(p);
+    int menu;
+    do{
+      System.out.println("Menu de motocicletas");
+      System.out.println("1.-Agregar motocicleta al registro");
+      System.out.println("2.-Editar");
+      System.out.println("3.-Buscar");
+      System.out.println("4.-Eliminar");
+      System.out.println("5.-Listar");
+      System.out.println("6.-Mostrar");
+      System.out.println("7.-Salir");
+      menu = new Scanner(System.in).nextInt();
+      switch (menu) {
+        case 1:
+          System.out.println("Ingresa la marca");
+          entrada = new Scanner(System.in);
+          marca = entrada.nextLine();
+
+          System.out.println("Ingresa la velocidad de la moto");
+          entrada = new Scanner(System.in);
+          velocidad = entrada.nextInt();
+
+          System.out.println("Ingresa el tipo de la moto");
+          entrada = new Scanner(System.in);
+          tipo = entrada.nextLine();
+
+          System.out.println("Ingresa el peso de la moto");
+          entrada = new Scanner(System.in);
+          peso = entrada.nextDouble();
+
+          moto = new Motocicleta(marca, velocidad, tipo, peso);
+          list.add(moto);
+          System.out.println("La motocicleta ha sido guardada correctamente");
+          break;
+        case 2:
+          System.out.println("Ingresa el indice de la moto a editar");
+          entrada = new Scanner(System.in);
+          int indice = entrada.nextInt();
+          moto = list.get(indice);
+          System.out.println("Se encontro la moto:");
+          System.out.println(moto);
+          System.out.println("Ingresa el campo a editar:");
+          int submenu;
+          do {
+            System.out.println("1.-Marca");
+            System.out.println("2.-Velocidad");
+            System.out.println("3.-Tipo");
+            System.out.println("4.-Peso");
+            System.out.println("5.-Salir de edicion");
+            entrada = new Scanner(System.in);
+            submenu = entrada.nextInt();
+            menuEditar(submenu);
+          }while (submenu != 5);
+          break;
+        case 3:
+          System.out.println("Ingresa el indice de la moto a buscar");
+          entrada = new Scanner(System.in);
+          indice = entrada.nextInt();
+          moto = list.get(indice);
+          System.out.println("Se encontro la moto");
+          System.out.println(moto);
+          break;
+        case 4:
+          System.out.println("Ingresa el indice de la moto a eliminar");
+          entrada = new Scanner(System.in);
+          indice = entrada.nextInt();
+          moto = list.get(indice);
+          System.out.println("Se encontro la moto a eliminar");
+          list.remove(indice);
+          System.out.println("Se elimino la moto:");
+          System.out.println(moto);
+          break;
+        case 5:
+          System.out.println("Lista de motocicletas en el registro:");
+          for (Motocicleta i : list){
+            System.out.println(i.toString());
+          }
+          break;
+        case 6:
+
+          break;
+        case 7:
+          System.out.println("Saliendo...");
+          break;
+        default:
+          System.out.println("Opcion invalida, intente de nuevo");
+          break;
+      }
+    }while(menu != 7);
+  }
+
+  public static void menuEditar(int opcion) {
+    switch (opcion) {
+      case 1:
+        System.out.println("Ingresa la nueva marca");
+        entrada = new Scanner(System.in);
+        marca = entrada.nextLine();
+        moto.setMarca(marca);
+        break;
+      case 2:
+        System.out.println("Ingresa la nueva velocidad");
+        entrada = new Scanner(System.in);
+        velocidad = entrada.nextInt();
+        moto.setVelocidad(velocidad);
+        break;
+      case 3:
+        System.out.println("Ingresa el nuevo tipo");
+        entrada = new Scanner(System.in);
+        tipo = entrada.nextLine();
+        moto.setTipo(tipo);
+        break;
+      case 4:
+        System.out.println("Ingresa el nuevo peso");
+        entrada = new Scanner(System.in);
+        peso = entrada.nextDouble();
+        moto.setPeso(peso);
+        break;
+      case 5:
+        System.out.println("Saliendo...");
+        break;
+      default:
+        System.out.println("Opcion invalida, intenta de nuevo");
+        break;
     }
   }
 }
+
