@@ -1,138 +1,241 @@
 package org.samirbutron;
 
+import classes.Casa;
 import classes.Computadora;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import org.w3c.dom.ls.LSOutput;
 
 public class Main {
   private static Scanner entrada;
-  private static String marca, modelo, tipo;
-  private static int ram, almacenamiento;
-  private static double precio, tamañoTorre;
-  private static Computadora compu = new Computadora();
+  private static String calle, colonia, ciudad;
+  private static int numero, numeroPisos;
+  private static double precio, metrosCuadrados;
+  private static Casa casa = new Casa();
 
   public static void main(String[] args) {
 
-    Computadora compu1 = new Computadora("Dell", "Xp235", 500, 1000, 145.67,"laptop", 0);
-    Computadora compu2 = new Computadora("Lenovo", "G24", 250, 720, 89.6,"escritorio", 10.2);
-    Computadora compu3 = new Computadora("HP", "Note", 1600, 1000, 260.99,"laptop", 0);
-    Computadora compu4 = new Computadora("HP", "Note2", 2400, 1500, 460.99,"laptop", 0);
-    List<Computadora> list = new ArrayList<>();
-    list.add(compu1);
-    list.add(compu2);
-    list.add(compu3);
-    list.add(compu4);
+    Casa casa1 = new Casa("Obelisco", 104, "Pilares", "Alhambra", 2,145000, 400);
+    Casa casa2 = new Casa("Cantera", 132, "Pilares", "Alhambra", 1,250000, 750.2);
+    Casa casa3 = new Casa("Zeus", 200, "Olimpo", "Carolina", 3,550000, 670.10);
+    Casa casa4 = new Casa("a", 1, "a", "a", 1,1, 1);
+    List<Casa> list = new ArrayList<>();
+    list.add(casa1);
+    list.add(casa2);
+    list.add(casa3);
+    list.add(casa4);
 
     int menu;
     do{
-      System.out.println("Menu de computadoras");
-      System.out.println("1.-Agregar computadora al registro");
+      System.out.println("**************************************************");
+      System.out.println("Menu principal de Casas");
+      System.out.println("1.-Agregar casa al registro");
       System.out.println("2.-Editar");
-      System.out.println("3.-Buscar");
+      System.out.println("3.-Buscar por indice");
       System.out.println("4.-Eliminar");
-      System.out.println("5.-Mostrar");
-      System.out.println("6.-Listar");
-      System.out.println("7.-Buscar por marca");
-      System.out.println("8.-Salir");
-      menu = new Scanner(System.in).nextInt();
+      System.out.println("5.-Mostrar casas");
+      System.out.println("6.-Lista por calle");
+      System.out.println("7.-Buscar por colonia");
+      System.out.println("8.-Buscar por numero, colonia y calle");
+      System.out.println("9.-Salir");
+      try {
+        menu = new Scanner(System.in).nextInt();
+      } catch (Exception e) {
+        menu = 0;
+      }
       switch (menu) {
         case 1:
-          System.out.println("Ingresa la marca");
+          System.out.println("Ingresa la calle");
           entrada = new Scanner(System.in);
-          marca = entrada.nextLine();
+          try {
+            calle = entrada.nextLine();
+          } catch (Exception e) {
+            System.out.println("Valor inaceptable para campo");
+            break;
+          }
 
-          System.out.println("Ingresa el modelo de la computadora");
+          System.out.println("Ingresa el numero de la casa");
           entrada = new Scanner(System.in);
-          modelo = entrada.nextLine();
+          try {
+            numero = entrada.nextInt();
+          } catch (Exception e) {
+            System.out.println("Valor inaceptable para campo");
+            break;
+          }
 
-          System.out.println("Ingresa la ram de la computadora");
+          System.out.println("Ingresa la colonia de la casa");
           entrada = new Scanner(System.in);
-          ram = entrada.nextInt();
+          try {
+            colonia = entrada.nextLine();
+          } catch (Exception e) {
+            System.out.println("Valor inaceptable para campo");
+            break;
+          }
 
-          System.out.println("Ingresa el almacenamiento de la computadora");
+          System.out.println("Ingresa el ciudad de la casa");
           entrada = new Scanner(System.in);
-          almacenamiento = entrada.nextInt();
+          try {
+            ciudad = entrada.nextLine();
+          } catch (Exception e) {
+            System.out.println("Valor inaceptable para campo");
+            break;
+          }
 
-          System.out.println("Ingresa el precio de la computadora");
+          System.out.println("Ingresa el numero de pisos de la casa");
           entrada = new Scanner(System.in);
-          precio = entrada.nextDouble();
+          try {
+            numeroPisos = entrada.nextInt();
+          } catch (Exception e) {
+            System.out.println("Valor inaceptable para campo");
+            break;
+          }
 
-          System.out.println("Ingresa el tipo de la computadora");
+          System.out.println("Ingresa el precio de la casa");
           entrada = new Scanner(System.in);
-          tipo = entrada.nextLine();
+          try {
+            precio = entrada.nextDouble();
+          } catch (Exception e) {
+            System.out.println("Valor inaceptable para campo");
+            break;
+          }
 
-          System.out.println("Ingresa el tamaño de torre de la computadora");
+          System.out.println("Ingresa los metros cuadrados de la casa");
           entrada = new Scanner(System.in);
-          tamañoTorre = entrada.nextDouble();
+          try {
+            metrosCuadrados = entrada.nextDouble();
+          } catch (Exception e) {
+            System.out.println("Valor inaceptable para campo");
+            break;
+          }
 
-          compu = new Computadora(marca, modelo, ram, almacenamiento, precio, tipo, tamañoTorre);
-          list.add(compu);
-          System.out.println("La computadora ha sido guardada correctamente");
+          casa = new Casa(calle, numero, colonia, ciudad, numeroPisos, precio, metrosCuadrados);
+          boolean existe = false;
+          for(Casa c : list){
+            if(c.equals(casa)){
+              existe = true;
+              break;
+            }
+          }
+          if(!existe) {
+            list.add(casa);
+            System.out.println("La casa ha sido agregada exitosamente a la lista");
+          }else {
+            System.out.println("La casa ya existe dentro de la lista");
+          }
           break;
+
         case 2:
-          System.out.println("Ingresa la marca de la computadora a editar");
+          System.out.println("Ingresa el indice de la casa a editar");
           entrada = new Scanner(System.in);
           int indice = entrada.nextInt();
-          compu = list.get(indice);
-          System.out.println("Se encontro la computadora:");
-          System.out.println(compu);
+          try {
+            casa = list.get(indice);
+          } catch (Exception e) {
+            System.out.println("Casa inexistente");
+            break;
+          }
+          System.out.println("Se encontro la casa:");
+          System.out.println(casa);
           System.out.println("Ingresa el campo a editar:");
           int submenu;
           do {
-            System.out.println("1.-Marca");
-            System.out.println("2.-Modelo");
-            System.out.println("3.-Ram");
-            System.out.println("4.-Almacenamiento");
-            System.out.println("5.-Precio");
-            System.out.println("6.-Tipo");
-            System.out.println("7.-Tamaño de torre");
+            System.out.println("1.-Calle");
+            System.out.println("2.-Numero");
+            System.out.println("3.-Colonia");
+            System.out.println("4.-Ciudad");
+            System.out.println("5.-Numero de pisos");
+            System.out.println("6.-Precio");
+            System.out.println("7.-Metros cuadrados");
             System.out.println("8.-Salir de edición");
             entrada = new Scanner(System.in);
-            submenu = entrada.nextInt();
+            try {
+              submenu = entrada.nextInt();
+            } catch (Exception e) {
+              submenu = 0;
+            }
             menuEditar(submenu);
           }while (submenu != 8);
           break;
         case 3:
-          System.out.println("Ingresa el indice de la computadora a buscar");
+          System.out.println("Ingresa el indice de la casa a buscar");
           entrada = new Scanner(System.in);
           indice = entrada.nextInt();
-          compu = list.get(indice);
-          System.out.println("Se encontro la computadora");
-          System.out.println(compu);
+          try {
+            casa = list.get(indice);
+          } catch (Exception e) {
+            System.out.println("Casa inexistente");
+            break;
+          }
+          System.out.println("Se encontro la casa");
+          System.out.println(casa);
           break;
         case 4:
-          System.out.println("Ingresa el indice de la computadora a eliminar");
+          System.out.println("Ingresa el indice de la casa a eliminar");
           entrada = new Scanner(System.in);
           indice = entrada.nextInt();
-          compu = list.get(indice);
-          System.out.println("Se encontro la computadora a eliminar");
+          try {
+            casa = list.get(indice);
+          } catch (Exception e) {
+            System.out.println("Casa inexistente");
+            break;
+          }
+          System.out.println("Se encontro la casa a eliminar");
           list.remove(indice);
-          System.out.println("Se elimino la computadora:");
-          System.out.println(compu);
+          System.out.println("Se elimino la casa:");
+          System.out.println(casa);
           break;
         case 5:
-          System.out.println("Lista de computadoras en el registro:");
-          for (Computadora i : list){
+          System.out.println("Lista de casas en el registro:");
+          for (Casa i : list){
             System.out.println(i.toString());
           }
           break;
         case 6:
           for(int i =0 ; i < list.size(); i++){
-            System.out.printf("\n[%d] => "+list.get(i).getMarca(),i);
+            System.out.printf("\n[%d] => "+list.get(i).getCiudad(),i);
           }
           break;
         case 7:
-          System.out.println("Ingresa la marca de computadora a buscar");
+          System.out.println("Ingresa la colonia de casa a buscar");
           entrada = new Scanner(System.in);
-          marca = entrada.nextLine();
-          for (Computadora computadora : list) {
-            if (marca.equals(computadora.getMarca())) {
-              System.out.printf("\n[%d]"+computadora,list.indexOf(computadora));
+          calle = entrada.nextLine();
+          for (Casa c : list) {
+            if (calle.equals(c.getColonia())) {
+              System.out.printf("\n[%d]"+c,list.indexOf(casa));
             }
           }
           break;
-        case 8:
+          case 8:
+            System.out.println("Ingresa el numero, colonia y calle de la casa a buscar");
+            entrada = new Scanner(System.in);
+            try {
+              numero = entrada.nextInt();
+            } catch (Exception e) {
+              System.out.println("Valor inaceptable para campo");
+              break;
+            }
+            entrada = new Scanner(System.in);
+            try {
+              colonia = entrada.nextLine();
+            } catch (Exception e) {
+              System.out.println("Valor inaceptable para campo");
+              break;
+            }
+            entrada = new Scanner(System.in);
+            try {
+              calle = entrada.nextLine();
+            } catch (Exception e) {
+              System.out.println("Valor inaceptable para campo");
+              break;
+            }
+            for(Casa c : list){
+              if(c.getNumero() == numero && c.getColonia().equals(colonia) && c.getCalle().equals(calle)){
+                System.out.println(c);
+              }
+            }
+            break;
+        case 9:
           System.out.println("Saliendo...");
           break;
         default:
@@ -140,52 +243,52 @@ public class Main {
           break;
       }
       System.out.println();
-    }while(menu != 8);
+    }while(menu != 9);
   }
 
   public static void menuEditar(int opcion) {
     switch (opcion) {
       case 1:
-        System.out.println("Ingresa la nueva marca");
+        System.out.println("Ingresa la nueva calle");
         entrada = new Scanner(System.in);
-        marca = entrada.nextLine();
-        compu.setMarca(marca);
+        calle = entrada.nextLine();
+        casa.setCalle(calle);
         break;
       case 2:
-        System.out.println("Ingresa el nuevo modelo");
+        System.out.println("Ingresa el nuevo numero");
         entrada = new Scanner(System.in);
-        modelo = entrada.nextLine();
-        compu.setModelo(modelo);
+        numero = entrada.nextInt();
+        casa.setNumero(numero);
         break;
       case 3:
-        System.out.println("Ingresa la nueva ram");
+        System.out.println("Ingresa la nueva colonia");
         entrada = new Scanner(System.in);
-        ram = entrada.nextByte();
-        compu.setRam(ram);
+        colonia = entrada.nextLine();
+        casa.setColonia(colonia);
         break;
       case 4:
-        System.out.println("Ingresa el nuevo almacenamiento");
+        System.out.println("Ingresa la nueva ciudad");
         entrada = new Scanner(System.in);
-        almacenamiento = entrada.nextInt();
-        compu.setAlmacenamiento(almacenamiento);
+        ciudad = entrada.nextLine();
+        casa.setCiudad(ciudad);
         break;
       case 5:
+        System.out.println("Ingresa el nuevo numero de pisos");
+        entrada = new Scanner(System.in);
+        numeroPisos = entrada.nextInt();
+        casa.setNumeroPisos(numeroPisos);
+        break;
+      case 6:
         System.out.println("Ingresa el nuevo precio");
         entrada = new Scanner(System.in);
         precio = entrada.nextDouble();
-        compu.setPrecio(precio);
-        break;
-      case 6:
-        System.out.println("Ingresa el nuevo tipo");
-        entrada = new Scanner(System.in);
-        tipo = entrada.nextLine();
-        compu.setTipo(tipo);
+        casa.setPrecio(precio);
         break;
       case 7:
-        System.out.println("Ingresa el nuevo tamaño de torre");
+        System.out.println("Ingresa la nueva superficie");
         entrada = new Scanner(System.in);
-        tamañoTorre = entrada.nextDouble();
-        compu.setTamañoTorre(tamañoTorre);
+        metrosCuadrados = entrada.nextDouble();
+        casa.setMetrosCuadrados(metrosCuadrados);
         break;
       case 8:
         System.out.println("Saliendo...");
