@@ -1,8 +1,11 @@
 package org.samirbutron;
 
+import com.mx.menus.MenuPrincipal;
+
 public class Main {
 
   public static void main(String[] args) {
-    System.out.println("Hello world!");
+    MenuPrincipal menuPrincipal = new MenuPrincipal();
+    menuPrincipal.menu();
   }
 }
