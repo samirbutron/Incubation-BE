@@ -243,4 +243,9 @@ public class Implementacion implements MetodosGenericos {
       }
     }
   }
+
+  public void transferirCuenta(Cliente cliente, Cliente cliente2, Cuenta cuenta) {
+    cliente.getCuentaList().remove(cuenta);
+    cliente2.getCuentaList().add(cuenta);
+  }
 }

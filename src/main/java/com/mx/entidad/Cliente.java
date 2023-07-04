@@ -74,11 +74,13 @@ public class Cliente {
 
   @Override
   public String toString() {
-    return "Alumno{" +
+    return "Cliente{" +
         "curp='" + curp + '\'' +
         ", nombre='" + nombre + '\'' +
         ", apellido='" + apellido + '\'' +
         ", edad=" + edad +
+        ", ciudad='" + ciudad + '\'' +
+        ", cuentaList=" + cuentaList +
         '}';
   }
 }

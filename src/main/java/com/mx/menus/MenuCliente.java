@@ -3,6 +3,7 @@ package com.mx.menus;
 import com.mx.entidad.Cliente;
 import com.mx.entidad.Cuenta;
 import com.mx.service.Implementacion;
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuCliente {
@@ -180,7 +181,8 @@ public class MenuCliente {
       System.out.println("Menu de edicion de cuenta");
       System.out.println("1.-Agregar cuenta");
       System.out.println("2.-Remover cuenta");
-      System.out.println("3.-Salir");
+      System.out.println("3.-Transferir cuenta");
+      System.out.println("4.-Salir");
       entrada = new Scanner(System.in);
       try {
         opcion = entrada.nextInt();
@@ -203,7 +205,7 @@ public class MenuCliente {
           }
           break;
         case 2:
-          System.out.println("Ingresa el nombre de la cuenta a retirar");
+          System.out.println("Ingresa el numero de la cuenta a retirar");
           entrada = new Scanner(System.in);
           NumeroDeCuenta = entrada.nextLine();
           cuenta = new Cuenta(NumeroDeCuenta);
@@ -217,11 +219,34 @@ public class MenuCliente {
           }
           break;
         case 3:
+          List<Cuenta> cuentas = cliente.getCuentaList();
+          System.out.println("Ingresa el numero de la cuenta a transferir");
+          entrada = new Scanner(System.in);
+          NumeroDeCuenta = entrada.nextLine();
+          cuenta = new Cuenta(NumeroDeCuenta);
+          cuenta = (Cuenta) implementacion.buscar(cuenta, "cuenta");
+          if(cuentas.contains(cuenta)){
+            System.out.println("Ingresa el CURP de la persona a transferir la cuenta");
+            entrada = new Scanner(System.in);
+            curp = entrada.nextLine();
+            Cliente cliente2 = new Cliente(curp);
+            cliente2 = (Cliente) implementacion.buscar(cliente2, "cliente");
+            if(cliente2 != null){
+              implementacion.transferirCuenta(cliente,cliente2,cuenta);
+              System.out.println("Transferencia exitosa");
+            }else {
+              System.out.println("Dicho CURP no corresponde a ningun cliente");
+            }
+          }else {
+            System.out.println("Dicha cuenta no existe o no la posee el cliente");
+          }
+          break;
+        case 4:
           System.out.println("Saliendo...");
           break;
         default:
           break;
       }
-    } while (opcion != 3);
+    } while (opcion != 4);
   }
 }
