@@ -8,12 +8,6 @@ public class Resultado {
   public Resultado() {
   }
 
-  public Resultado(String mensaje, String respuesta, Object obj) {
-    this.mensaje = mensaje;
-    this.respuesta = respuesta;
-    this.obj = obj;
-  }
-
   @Override
   public String toString() {
     return "Resultado [mensaje=" + mensaje + ", respuesta=" + respuesta + ", obj=" + obj + "]\n";

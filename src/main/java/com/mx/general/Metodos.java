@@ -5,13 +5,13 @@ import java.util.List;
 import com.mx.entidad.Mascota;
 
 public interface Metodos {
-  public String guardar(Mascota mascota);
+  String guardar(Mascota mascota);
 
-  public String editar(Mascota mascota);
+  String editar(Mascota mascota);
 
-  public String eliminar(Mascota mascota);
+  String eliminar(Mascota mascota);
 
-  public Mascota buscar(Mascota mascota);
+  Mascota buscar(Mascota mascota);
 
-  public List mostrar();
+  List<Mascota> mostrar();
 }

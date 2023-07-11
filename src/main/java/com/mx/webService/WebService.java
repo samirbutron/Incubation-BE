@@ -23,8 +23,7 @@ public class WebService {
   @Consumes({MediaType.APPLICATION_JSON})
   @Produces({MediaType.APPLICATION_JSON})
   public List<Mascota> mostrar(){
-    List<Mascota>lista = imp.mostrar();
-    return lista;
+    return (List<Mascota>) imp.mostrar();
   }
 
   @Path("guardar")
