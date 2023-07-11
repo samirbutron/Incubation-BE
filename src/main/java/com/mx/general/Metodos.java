@@ -1,17 +1,17 @@
 package com.mx.general;
 
-import java.util.List;
-
 import com.mx.entidad.Mascota;
 
+import java.util.List;
+
 public interface Metodos {
-  String guardar(Mascota mascota);
+    String guardar(Mascota mascota);
 
-  String editar(Mascota mascota);
+    String editar(Mascota mascota);
 
-  String eliminar(Mascota mascota);
+    String eliminar(Mascota mascota);
 
-  Mascota buscar(Mascota mascota);
+    Mascota buscar(Mascota mascota);
 
-  List<Mascota> mostrar();
+    List<Mascota> mostrar();
 }
