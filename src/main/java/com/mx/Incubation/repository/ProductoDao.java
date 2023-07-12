@@ -10,5 +10,7 @@ public interface ProductoDao extends JpaRepository<Producto, Integer> {
 
   List<Producto> findByMarca(String marca);
 
-  List<Producto> findByPrecioPublicoLessThan(int precio);
+  List<Producto> findByPrecioPublicoLessThan(double precio);
+
+  Producto findByNombreAndMarca(String nombre, String marca);
 }

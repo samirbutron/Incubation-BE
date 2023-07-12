@@ -4,7 +4,9 @@ import com.mx.Incubation.entity.Producto;
 import com.mx.Incubation.repository.ProductoDao;
 import com.mx.Incubation.response.Respuesta;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +53,7 @@ public class Implementacion implements Metodos {
       return new Respuesta("ERROR", "No existe un producto con este codigo", producto, 0);
     } else {
       productoDao.delete(producto);
-      return new Respuesta("EXITO", "El producto se elimino", producto, 1);
+      return new Respuesta("EXITO", "El producto se elimino", productoBuscado, 1);
     }
   }
 
@@ -114,6 +116,63 @@ public class Implementacion implements Metodos {
     } else {
       return new Respuesta("EXITO", "Estos son los productos menores a ese precio", productoList,
           0);
+    }
+  }
+
+  @Override
+  public Respuesta buscarCodigo(Producto producto) {
+    Producto productoEncontrado = productoDao.findByNombreAndMarca(producto.getNombre(),
+        producto.getMarca());
+    if (productoEncontrado == null) {
+      return new Respuesta("ERROR", "No hay producto con ese nombre y marca", null, 0);
+    } else {
+      return new Respuesta("EXITO", "Se encontro le producto ", productoEncontrado, 1);
+    }
+  }
+
+  @Override
+  public Respuesta valorDeMarca(Producto producto) {
+    List<Producto> productoList = productoDao.findByMarca(producto.getMarca());
+    if (productoList.isEmpty()) {
+      return new Respuesta("ERROR", "No existen productos de dicha marca", null, 0);
+    } else {
+      double sum = productoList.stream().mapToDouble(p -> p.getPrecioPublico() * p.getStock())
+          .sum();
+      return new Respuesta("EXITO", "El valor agregado de la marca " + producto.getMarca() + " es",
+          sum, 1);
+    }
+  }
+
+  @Override
+  public Respuesta marcaMasBarata() {
+    List<Producto> productoList = productoDao.findAll();
+    Map<String, Double> marcas = new HashMap<>();
+    Map<String, Double> marcasBaratas = new HashMap<>();
+    double valorMin = Integer.MAX_VALUE;
+    if (productoList.isEmpty()) {
+      return new Respuesta("ERROR", "No existen productos en el registro", null, 0);
+    } else {
+      for (Producto p : productoList) {
+        if (marcas.containsKey(p.getMarca())) {
+          double valor = marcas.get(p.getMarca()) + p.getPrecio() * p.getStock();
+          marcas.replace(p.getMarca(), valor);
+        } else {
+          double valorAgregado = p.getPrecio() * p.getStock();
+          marcas.put(p.getMarca(), valorAgregado);
+        }
+      }
+      for (String key : marcas.keySet()) {
+        if (marcas.get(key) == valorMin) {
+          marcasBaratas.put(key, marcas.get(key));
+        } else if (marcas.get(key) < valorMin) {
+          valorMin = marcas.get(key);
+          marcasBaratas.clear();
+          marcasBaratas.put(key, marcas.get(key));
+        }
+      }
+      System.out.println(marcas);
+      return new Respuesta("EXITO", "Estos son las marcas con los productos mas baratos ",
+          marcasBaratas, 1);
     }
   }
 }

@@ -53,4 +53,25 @@ public class ProductoWs {
   public Respuesta buscarMenorAPrecio(@RequestBody Producto producto) {
     return implementacion.buscarMenorAPrecio(producto);
   }
+
+  @GetMapping("buscarMarca")
+  public Respuesta buscarMarca(@RequestBody Producto producto) {
+    return implementacion.buscarPorMarca(producto);
+  }
+
+  @GetMapping("obtenerCodigo")
+  public Respuesta buscarCodigo(@RequestBody Producto producto) {
+    return implementacion.buscarCodigo(producto);
+  }
+
+  @GetMapping("marcasMasBaratas")
+  public Respuesta marcasMasBaratas() {
+    return implementacion.marcaMasBarata();
+  }
+
+  @GetMapping("valorDeMarca")
+  public Respuesta valorDeMarca(@RequestBody Producto producto) {
+    return implementacion.valorDeMarca(producto);
+  }
+
 }

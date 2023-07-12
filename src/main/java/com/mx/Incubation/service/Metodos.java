@@ -3,21 +3,27 @@ package com.mx.Incubation.service;
 import com.mx.Incubation.entity.Producto;
 import com.mx.Incubation.response.Respuesta;
 
-public interface Metodos {
+interface Metodos {
 
-  public Respuesta guardar(Producto producto);
+  Respuesta guardar(Producto producto);
 
-  public Respuesta editar(Producto producto);
+  Respuesta editar(Producto producto);
 
-  public Respuesta eliminar(Producto producto);
+  Respuesta eliminar(Producto producto);
 
-  public Respuesta buscar(Producto producto);
+  Respuesta buscar(Producto producto);
 
-  public Respuesta mostrar();
+  Respuesta mostrar();
 
-  public Respuesta buscarPorMarca(Producto producto);
+  Respuesta buscarPorMarca(Producto producto);
 
-  public Respuesta buscarBajosDeStock();
+  Respuesta buscarBajosDeStock();
 
-  public Respuesta buscarMenorAPrecio(Producto producto);
+  Respuesta buscarMenorAPrecio(Producto producto);
+
+  Respuesta buscarCodigo(Producto producto);
+
+  Respuesta valorDeMarca(Producto producto);
+
+  Respuesta marcaMasBarata();
 }

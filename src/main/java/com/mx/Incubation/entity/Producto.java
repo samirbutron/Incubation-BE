@@ -19,8 +19,8 @@ public class Producto {
   private int codigo;
   private String nombre;
   private String marca;
-  private int precio;
+  private double precio;
   @Column(name = "precio_publico")
-  private int precioPublico;
+  private double precioPublico;
   private int stock;
 }
