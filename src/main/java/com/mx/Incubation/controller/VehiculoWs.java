@@ -39,7 +39,7 @@ public class VehiculoWs {
     return impVehiculo.eliminar(vehiculo);
   }
 
-  @GetMapping("buscar")
+  @PostMapping("buscar")
   public Respuesta buscar(@RequestBody Vehiculo vehiculo) {
     return impVehiculo.buscar(vehiculo);
   }

@@ -20,14 +20,16 @@ public class ImpVehiculo implements MetodosVehiculo {
   public Respuesta guardar(Vehiculo vehiculo) {
     List<Vehiculo> vehiculoList = vehiculoDao.findAll();
     if (!vehiculoList.isEmpty()) {
-      for (Vehiculo p : vehiculoList) {
-        if (p.getMatricula().equals(vehiculo.getMatricula())) {
-          return new Respuesta("ERROR", "Esta matricula ya existe", p, 0);
+      for (Vehiculo v : vehiculoList) {
+        if (v.getMatricula().equals(vehiculo.getMatricula())) {
+          return new Respuesta("ERROR", "Esta matricula ya existe", v, 0);
         }
       }
     }
-    if (impPersona.buscar(vehiculo.getPersona()).getValor() == 0 && vehiculo.getPersona() != null) {
-      return new Respuesta("ERROR", "La persona asociada al vehiculo no existe", vehiculo, 0);
+    if (vehiculo.getPersona() != null) {
+      if (impPersona.buscar(vehiculo.getPersona()).getValor() == 0) {
+        return new Respuesta("ERROR", "La persona asociada al vehiculo no existe", vehiculo, 0);
+      }
     }
     vehiculoDao.save(vehiculo);
     return new Respuesta("EXITO", "El vehiculo fue agregado", vehiculo, 1);
@@ -39,14 +41,14 @@ public class ImpVehiculo implements MetodosVehiculo {
     if (vehiculoBuscado == null) {
       return new Respuesta("ERROR", "El vehiculo a editar no existe", vehiculo, 0);
     } else {
-      if (impPersona.buscar(vehiculo.getPersona()).getValor() == 0
-          && vehiculo.getPersona() != null) {
-        return new Respuesta("ERROR", "La persona a asociar el vehiculo no existe", vehiculoBuscado,
-            0);
-      } else {
-        vehiculoDao.save(vehiculo);
-        return new Respuesta("EXITO", "El vehiculo fue editado", vehiculo, 1);
+      if (vehiculo.getPersona() != null) {
+        if (impPersona.buscar(vehiculo.getPersona()).getValor() == 0) {
+          return new Respuesta("ERROR", "La persona a asociar el vehiculo no existe",
+              vehiculoBuscado, 0);
+        }
       }
+      vehiculoDao.save(vehiculo);
+      return new Respuesta("EXITO", "El vehiculo fue editado", vehiculo, 1);
     }
   }
 

@@ -39,7 +39,7 @@ public class PersonaWs {
     return impPersona.eliminar(persona);
   }
 
-  @GetMapping("buscar")
+  @PostMapping("buscar")
   public Respuesta buscar(@RequestBody Persona persona) {
     return impPersona.buscar(persona);
   }
